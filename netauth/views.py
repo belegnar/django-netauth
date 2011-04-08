@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib import messages, auth
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.views.generic.simple import direct_to_template
 
 from netauth import RedirectException, settings, lang
 from netauth.utils import str_to_class, get_backend
@@ -15,6 +18,8 @@ def redirect_decorator(func):
             return redirect(*e.args, **e.kwargs)
     return __wrapper
 
+def login(request):
+    return direct_to_template(request, 'login.html', extra_context = {'title' : u'Авторизация'})
 
 def logout(request):
     auth.logout(request)
